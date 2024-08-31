@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="001" author="tawerka1337228321@mail.ru">
+        <sql>
+            CREATE TABLE patient_note (
+                                          id BIGSERIAL PRIMARY KEY,
+                                          created_date_time TIMESTAMP NOT NULL,
+                                          last_modified_date_time TIMESTAMP NOT NULL,
+                                          created_by_user_id BIGINT,
+                                          last_modified_by_user_id BIGINT,
+                                          note VARCHAR(4000),
+                                          patient_id BIGINT NOT NULL,
+                                          CONSTRAINT fk_pat_note_to_modified_user FOREIGN KEY (last_modified_by_user_id) REFERENCES company_user(id),
+                                          CONSTRAINT fk_pat_note_to_created_user FOREIGN KEY (created_by_user_id) REFERENCES company_user(id),
+                                          CONSTRAINT fk_pat_note_to_patient FOREIGN KEY (patient_id) REFERENCES patient_profile(id)
+            );
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>

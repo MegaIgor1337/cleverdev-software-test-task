@@ -1,0 +1,30 @@
+version: '1.0'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: migration_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - 5432:5432
+    volumes:
+      - database-data:/var/lib/migration_db
+    restart: always
+  backend:
+    image: myap
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL_MIGRATION_SERVICE: jdbc:postgresql://db:5432/migration_db
+      DATABASE_USERNAME_MIGRATION_SERVICE: postgres
+      DATABASE_PASSWORD_MIGRATION_SERVICE: root
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    restart: always
+volumes:
+  database-data:

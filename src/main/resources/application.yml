@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL_MIGRATION_SERVICE}
+    username: ${DATABASE_USERNAME_MIGRATION_SERVICE}
+    password: ${DATABASE_PASSWORD_MIGRATION_SERVICE}
+  liquibase:
+    change-log: db/changelog/changelog-master.xml
+logging:
+  level:
+    root: info
+migration:
+  client:
+    server: localhost
+    url: /clients
+    port: 8081
+  note:
+    server: localhost
+    url: /notes
+    port: 8082
+  zone: Europe/Minsk
+  cron: "0 15 */2 * * *"
+  batchSize: 200
+  dateFrom: "2024-01-01"
+  dateTo: "2024-12-31"
